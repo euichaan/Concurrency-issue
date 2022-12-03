@@ -23,13 +23,13 @@ class OptimisticLockStockFacadeTest {
   private StockRepository stockRepository;
 
   @BeforeEach //테스트 메서드 실행 전에 수행된다.
-  public void before() {
+  public void insert() {
     Stock stock = new Stock(1L, 100L);
     stockRepository.saveAndFlush(stock);
   }
 
   @AfterEach //테스트 메서드 실행 이후에 수행된다.
-  public void after() {
+  public void delete() {
     stockRepository.deleteAll();
   }
 

@@ -14,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class NamedLockStockFacadeTest {
+class LettuceLockStockFacadeTest {
   @Autowired
-  private NamedLockStockFacade namedLockStockFacade;
+  private LettuceLockStockFacade lettuceLockStockFacade;
 
   @Autowired
   private StockRepository stockRepository;
@@ -44,7 +44,9 @@ class NamedLockStockFacadeTest {
     for (int i = 0; i < threadCount; i++) {
       executorService.submit(() -> {
         try {
-          namedLockStockFacade.decrease(1L, 1L);
+          lettuceLockStockFacade.decrease(1L, 1L);
+        } catch (InterruptedException e) {
+          throw new RuntimeException(e);
         } finally {
           latch.countDown();
         }
@@ -56,4 +58,5 @@ class NamedLockStockFacadeTest {
     // 100 - 1 * 100
     assertEquals(0L, stock.getQuantity());
   }
+
 }
